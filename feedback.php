@@ -1,3 +1,20 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['NomeUsuario']) || empty($_SESSION['NomeUsuario'])) {
+    header("Location: index.php");
+    exit();
+}
+
+if (isset($_GET['logout'])) {
+    session_unset();
+    session_destroy();
+    header("Location: index.php");
+    exit();
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -23,7 +40,7 @@
 
   <main class="container">
     <h2>Contato</h2>
-    <form id="contactForm" action="https://api.staticforms.xyz/submit" method="post">
+    <form action="https://api.staticforms.xyz/submit" method="post">
       <div class="input-field">
         <input type="text" id="nameInput" name="name" placeholder="Nome" autocomplete="off" required>
         <div class="underline"></div>
@@ -38,8 +55,9 @@
       </div>
       <button type="submit">Enviar</button>
 
-      <input type="hidden" name="accessKey" value="00b67c33-dda1-46ce-a346-b65778464163">
-      <input type="hidden" name="redirectTo" value="http://localhost/SiteSaudeee/menup.php">
+      <input type="hidden" name="accessKey" value="e6be5f33-97d9-4d74-8a8c-6f51b0655361"
+">
+      <input type="hidden" name="redirectTo" value="http://localhost/trabalho/menup.php">
     </form>
   </main>
 

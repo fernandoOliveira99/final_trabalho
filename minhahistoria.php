@@ -77,6 +77,7 @@ if (isset($_POST['atualizar'])) {
 if (isset($_GET['depoimento_id'])) {
     $depoimento_id = $_GET['depoimento_id'];
     $depoimentoManager->excluirDepoimento($depoimento_id);
+    echo "<script>atualizarPagina();</script>"; // Adicionado para atualizar a página após a exclusão
 }
 
 ?>
@@ -89,7 +90,7 @@ if (isset($_GET['depoimento_id'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minhas Histórias</title>
-    <link rel="stylesheet" href="styhistoria.css">
+    <link rel="stylesheet" href="css/stylehistoria.css">
 </head>
 
 <body>
@@ -109,25 +110,33 @@ if (isset($_GET['depoimento_id'])) {
             foreach ($depoimentos as $depoimento) {
                 echo "
                 <li>
-                    <div class='dados'>
+                    <div class='card'>
                         <form method='POST' action=''>
                             <input type='hidden' name='depoimento_id' value='$depoimento->depoimento_id'>
                             <input type='text' name='titulo' value='$depoimento->titulo'>
                             <textarea name='historia'>$depoimento->historia</textarea>
-                            <button type='submit' name='atualizar'>Atualizar</button>
+                            <button type='submit' name='atualizar' onclick='atualizarPagina()'>Atualizar</button>
                         </form>
-                    </div>
-
-                    <div class='icone-lista'>
-                        <a href='?depoimento_id=$depoimento->depoimento_id' onclick=\"return confirm('Tem certeza que deseja excluir esta história?');\">
-                            <img src='img/excluir.png' alt='Excluir'>
-                        </a>
+                        <div class='icon-delete'>
+                            <a href='?depoimento_id=$depoimento->depoimento_id' onclick=\"return confirm('Tem certeza que deseja excluir esta história?'); atualizarPagina();\">
+                                <img src='img/excluir.png' alt='Excluir'>
+                            </a>
+                        </div>
                     </div>
                 </li>";
             }
             ?>
         </ul>
     </div>
+    <script>
+    <?php
+    if (isset($_GET['depoimento_id']) || isset($_POST['atualizar'])) {
+        echo 'window.location.href = window.location.pathname;';
+    }
+    ?>
+</script>
+
+
 </body>
 
 </html>
